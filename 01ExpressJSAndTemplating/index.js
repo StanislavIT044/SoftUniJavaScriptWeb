@@ -1,9 +1,22 @@
-const env = process.env.NODE_ENV || 'development';
+// [x]initialize express app
+// [x]setup handlebars
+// [x]setup static filex
+// []setup storage middleware
+// [x]set main route handlers (controller actions)
 
-const config = require('./config/config')[env];
-const app = require('express')();
+const express = require('express');
+const hbs = require('express-handlebars');
+const { catalog } = require('./controllers/catalog');
 
-require('./config/express')(app);
-require('./config/routes')(app);
+const port = 3000;
+const app = express();
 
-app.listen(config.port, console.log(`Listening on port ${config.port}! Now its up to you...`));
+app.engine('hbs', hbs({
+    extname: '.hbs'
+}));
+app.set('view engine', 'hbs');
+app.use('/static', express.static('static'));
+
+app.get('/', catalog)
+
+app.listen(port, () => console.log(`Server listening on port ${port}`));
