@@ -10,6 +10,8 @@
     "dependencies": {
         "express": "^4.17.1",
         "express-handlebars": "^3.1.0",
+        "mogoose": "0.0.1-security",
+        "mongoose": "5.12.13",
         "uniqid": "^5.0.3"
     }
 }
