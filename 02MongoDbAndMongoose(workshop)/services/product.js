@@ -2,39 +2,6 @@ const Cube = require('../models/Cube');
 const Comment = require('../models/Comment');
 const Accessory = require('../models/Accessory');
 
-// load and parse data file
-// provide ability to:
-// - read all entries
-// - read single entry by ID
-// - add new entry
-// * get matching entries by search criteria
-
-/* Model structure */
-/*
-    {
-        "name": "string",
-        "description": "string",
-        "imageUrl": "string",
-        "difficulty": "number"
-    }
-*/
-
-async function init() {
-    return (req, res, next) => {
-        req.storage = {
-            getAll,
-            getById,
-            create,
-            edit,
-            createComment,
-            createAccessory,
-            getAllAccessories,
-            attachSticker
-        };
-        next();
-    };
-}
-
 async function getAll(query) {
     const options = {};
 
@@ -93,15 +60,6 @@ async function createComment(cubeId, comment) {
     await cube.save();
 }
 
-async function getAllAccessories(existing) {
-    return Accessory.find({ _id: { $nin: existing } }).lean();
-}
-
-async function createAccessory(accessory) {
-    const record = new Accessory(accessory);
-    return record.save();
-}
-
 async function attachSticker(cubeId, stickerId) {
     const cube = await Cube.findById(cubeId);
     const sticker = await Accessory.findById(stickerId);
@@ -114,12 +72,10 @@ async function attachSticker(cubeId, stickerId) {
 }
 
 module.exports = {
-    init,
     getAll,
     getById,
     create,
+    edit,
     createComment,
-    createAccessory,
-    getAllAccessories,
     attachSticker
-};
+}

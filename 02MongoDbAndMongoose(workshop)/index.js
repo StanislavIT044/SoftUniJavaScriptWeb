@@ -9,13 +9,16 @@ const express = require('express');
 const expressConfig = require('./config/express');
 const databaseConfig = require('./config/database');
 const routesConfig = require('./config/routes');
-const { init: storage } = require('./services/storage');
+const storage = require('./middlewares/storage');
+const logger = require('./middlewares/logger');
 
 start();
 
 async function start() {
     const port = 3000;
     const app = express();
+
+    app.use(logger());
 
     expressConfig(app);
     await databaseConfig(app);
