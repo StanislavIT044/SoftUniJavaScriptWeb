@@ -45,7 +45,7 @@ module.exports = () => (req, res, next) => {
 
     function createToken(user) {
         const userViewModel = { _id: user._id, username: user.username }
-        const token = jwt.sign(user, 'my very secure secret');
+        const token = jwt.sign(userViewModel, 'my very secure secret');
 
         res.cookie('SESSION_DATA', token, { httpOnly: true });
 
