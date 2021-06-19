@@ -1,9 +1,11 @@
+const { isGuest, isAuth } = require('../middlewares/guards');
+
 const router = require('express').Router();
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register' });
 });
-router.post('/register', async (req, res) => {
+router.post('/register', isGuest(), async (req, res) => {
     try {
         await req.auth.register(req.body);
         res.redirect('/products');
@@ -18,10 +20,10 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest(), (req, res) => {
     res.render('login', { title: 'Login' });
 });
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest(), async (req, res) => {
     try {
         await req.auth.login(req.body);
 
@@ -38,5 +40,9 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.get('/logout', isAuth(),(req, res) => {
+    req.auth.logout();
+    res.redirect('/products');
+});
 
 module.exports = router;
