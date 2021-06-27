@@ -17,9 +17,6 @@ async function start() {
     expressConfig(app);
     routesConfing(app);
 
-    //TODO: Remove for production
-    app.get('/', (req, res) => res.send('It works!'));
-
     app.listen(PORT, () => {
         // testAuth();
         console.log(`Application started at http://localhost:${PORT}`)

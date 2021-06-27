@@ -3,11 +3,18 @@ const { body, validationResult } = require('express-validator');
 const { isGuest } = require('../middlewares/guards');
 
 router.get('/register', isGuest(), (req, res) => [
-    res.render('register')
+    res.render('user/register')
 ]);
 router.post('/register',
     isGuest(),
-    body('username').isLength({ min: 3 }).withMessage('Username must be at least 3 characters'), // TODO: change according to requiremetns
+    body('email', 'Invalid email!').isEmail(),
+    body('username')
+        .isLength({ min: 3 })
+        .withMessage('Username must be at least 3 characters'),
+    body('password')
+        .isLength({ min: 5 })
+        .withMessage('Password must be at least 5 characters').bail()
+        .matches(/[a-zA-Z0-9]/).withMessage('Passwort may contain only digits and numbers'),
     body('rePass').custom((value, { req }) => {
         if (value != req.body.password) {
             throw new Error('Passwords don\'t match');
@@ -19,29 +26,29 @@ router.post('/register',
 
         try {
             if (errors.length > 0) {
-                //TODO: improve error messages
-                throw new Error('Valiation error');
+                const message = errors.map(e => e.msg).join('\n');
+                throw new Error(message);
             }
 
-            await req.auth.register(req.body.username, req.body.password);
+            await req.auth.register(req.body.username, req.body.email, req.body.password);
 
             res.redirect('/'); //TODO: change redirect location
 
         } catch (err) {
             console.log(err.message)
             const ctx = {
-                errors,
+                error: err.message.split('\n'),
                 userData: {
                     username: req.body.username
                 }
             };
-            res.render('register', { errors });
+            res.render('user/register', { errors });
         }
     }
 );
 
 router.get('/login', isGuest(), (req, res) => {
-    res.render('login');
+    res.render('user/login');
 });
 router.post('/login', isGuest(), async (req, res) => {
     try {
@@ -58,7 +65,7 @@ router.post('/login', isGuest(), async (req, res) => {
             }
         };
 
-        res.render('login', ctx);
+        res.render('user/login', ctx);
     }
 
 });

@@ -16,11 +16,11 @@
 # Application Requirements (BookingUni)
 
 [X] Include resources (HTML & CSS, ect.)
-[ ] Arrange templates (without editing)
-[ ] Update config to match project requirements (db name)
-[ ] Adapt User model and user service, auth middleware to project requirements
-[ ] Implement register, login page actions, register, login , logout actions
-[ ] Create models for project specific data
+[X] Arrange templates (without editing)
+[X] Update config to match project requirements (db name)
+[X] Adapt User model and user service, auth middleware to project requirements
+[X] Implement register, login page actions, register, login , logout actions
+[X] Create models for project specific data
 [ ] Create data services and middlewares for project-spcific data
 [ ] Implement page actions for project-specific functionality
 

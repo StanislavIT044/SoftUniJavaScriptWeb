@@ -1,10 +1,11 @@
 const User = require('../models/User');
 
-async function createUser(username, hashedPassword) {
+async function createUser(username, email, hashedPassword) {
     //TODO: adapt properties to proj requirements
 
     const user = new User({
         username,
+        email,
         hashedPassword
     });
 
@@ -21,9 +22,16 @@ async function getUserByUsername(username) {
     return user;
 }
 
-//TODO: add fucntions for finding user by other properties, as specified in the project requirements
+async function getUserByEmail(email) {
+    const pattern = new RegExp(`^${email}$`, 'i')
+
+    const user = await User.findOne({ email: { $regex: pattern } });
+
+    return user;
+}
 
 module.exports = {
     createUser,
     getUserByUsername,
+    getUserByEmail,
 }
