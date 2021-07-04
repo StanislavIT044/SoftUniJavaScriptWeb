@@ -15,7 +15,7 @@
 
 # Application Requirements (BookingUni)
 
-[X] Include resources (HTML & CSS, ect.)
+[ ] Include resources (HTML & CSS, ect.)
 [ ] Arrange templates (without editing)
 [ ] Update config to match project requirements (db name)
 [ ] Adapt User model and user service, auth middleware to project requirements

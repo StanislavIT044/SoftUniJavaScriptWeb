@@ -17,9 +17,6 @@ async function start() {
     expressConfig(app);
     routesConfing(app);
 
-    //TODO: Remove for production
-    app.get('/', (req, res) => res.send('It works!'));
-
     app.listen(PORT, () => {
         // testAuth();
         console.log(`Application started at http://localhost:${PORT}`)
@@ -43,7 +40,7 @@ async function start() {
 //         // const result = await userService.createUser('Peter', '123123');
 //         // console.log(result);
 
-//         // const user =  await userService.getUserByUsername('peter');
+//         // const user =  await userService.getUserByEmail('peter');
 //         // console.log(user);
 
 //     } catch (err){
